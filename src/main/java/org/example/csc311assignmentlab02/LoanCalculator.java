@@ -1,4 +1,13 @@
+
 package org.example.csc311assignmentlab02;
+
+
+/*
+ * LoanCalculator.java
+ * Written by Afaq Waris for CSC311 Assignment 2
+ * This JavaFX application calculates monthly and total loan payments.
+ */
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,21 +20,27 @@ import javafx.stage.Stage;
 
 public class LoanCalculator extends Application {
 
+    // Input fields for the user to enter loan details
     private TextField tfAnnualInterestRate = new TextField();
     private TextField tfNumberOfYears = new TextField();
     private TextField tfLoanAmount = new TextField();
+
+    // Output fields for displaying calculated results
     private TextField tfMonthlyPayment = new TextField();
     private TextField tfTotalPayment = new TextField();
+
+    // Button to trigger calculation
     private Button btCalculate = new Button("Calculate");
 
     @Override
     public void start(Stage primaryStage) {
-        // Create UI
+        // Setup the user interface using a GridPane layout
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(10, 10, 10, 10));
+        gridPane.setHgap(10);  // Set horizontal spacing between columns
+        gridPane.setVgap(10);  // Set vertical spacing between rows
+        gridPane.setPadding(new Insets(10));  // Add padding around the grid
 
+        // Add labels and input fields to the grid
         gridPane.add(new Label("Annual Interest Rate:"), 0, 0);
         gridPane.add(tfAnnualInterestRate, 1, 0);
         gridPane.add(new Label("Number of Years:"), 0, 1);
@@ -38,15 +53,17 @@ public class LoanCalculator extends Application {
         gridPane.add(tfTotalPayment, 1, 4);
         gridPane.add(btCalculate, 1, 5);
 
-        // Set properties for UI elements
+        // Make the output fields (monthly/total payment) read-only
         tfMonthlyPayment.setEditable(false);
         tfTotalPayment.setEditable(false);
+
+        // Align the grid in the center of the window
         gridPane.setAlignment(Pos.CENTER);
 
-        // Process events
+        // Set the button event handler to calculate loan payment
         btCalculate.setOnAction(e -> calculateLoanPayment());
 
-        // Create a scene and place it in the stage
+        // Setup the stage and scene
         Scene scene = new Scene(gridPane, 400, 250);
         primaryStage.setTitle("Loan Calculator");
         primaryStage.setScene(scene);
@@ -54,7 +71,7 @@ public class LoanCalculator extends Application {
     }
 
     private void calculateLoanPayment() {
-        // Get values from input fields
+        // Convert user input into numbers for calculations
         double interest = Double.parseDouble(tfAnnualInterestRate.getText());
         int years = Integer.parseInt(tfNumberOfYears.getText());
         double loanAmount = Double.parseDouble(tfLoanAmount.getText());
@@ -62,17 +79,20 @@ public class LoanCalculator extends Application {
         // Calculate monthly interest rate
         double monthlyInterestRate = interest / 1200;
 
-        // Calculate monthly payment
-        double monthlyPayment = loanAmount * monthlyInterestRate / (1
-                - 1 / Math.pow(1 + monthlyInterestRate, years * 12));
+        // Formula to calculate monthly payment
+        double monthlyPayment = loanAmount * monthlyInterestRate /
+                (1 - 1 / Math.pow(1 + monthlyInterestRate, years * 12));
+
+        // Display the result in the monthly payment field
         tfMonthlyPayment.setText(String.format("$%.2f", monthlyPayment));
 
-        // Calculate total payment
+        // Calculate and display total payment over the loan period
         double totalPayment = monthlyPayment * years * 12;
         tfTotalPayment.setText(String.format("$%.2f", totalPayment));
     }
 
     public static void main(String[] args) {
+        // Launch the JavaFX application
         launch(args);
     }
 }

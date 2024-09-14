@@ -1,4 +1,4 @@
-package org.example.csc311assignmentlab02;
+/*package org.example.csc311assignmentlab02;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -12,3 +12,5 @@ public class HelloController {
         welcomeText.setText("Welcome to JavaFX Application!");
     }
 }
+
+*/
